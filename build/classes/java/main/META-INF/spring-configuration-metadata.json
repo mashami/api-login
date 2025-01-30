@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "security.jwt",
+      "type": "com.example.apilogin.security.JwtProperties",
+      "sourceType": "com.example.apilogin.security.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "security.jwt.secret-key",
+      "type": "java.lang.String",
+      "description": "Secrete key used for issuing JWT",
+      "sourceType": "com.example.apilogin.security.JwtProperties"
+    }
+  ],
+  "hints": []
+}
