@@ -6,6 +6,7 @@ import com.example.apilogin.model.LoginRequest;
 import com.example.apilogin.model.LoginResponse;
 import com.example.apilogin.security.JwtIssuer;
 import com.example.apilogin.security.UserPrincipal;
+import com.example.apilogin.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,27 +24,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthController
  {
-     private final JwtIssuer jwtIssuer;
+     private final AuthService authService;
 
-     private final AuthenticationManager authenticationManager;
      @PostMapping("/api/auth/login")
-
      public LoginResponse login(@RequestBody  @Validated LoginRequest request){
-         var authentication = authenticationManager.authenticate(
-                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-         );
-
-         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-         var principal = (UserPrincipal) authentication.getPrincipal();
-
-         var roles = principal.getAuthorities().stream()
-                 .map(GrantedAuthority::getAuthority)
-                 .toList();
-
-         var token = jwtIssuer.issue(Long.parseLong(principal.getUserId()),principal.getEmail(), roles);
-         return LoginResponse.builder()
-                .accessToken(token)
-                .build();
+         return authService.attemptLogin(request.getEmail(), request.getPassword());
      }
 }

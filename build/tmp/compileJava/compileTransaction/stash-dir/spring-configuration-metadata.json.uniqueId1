@@ -10,6 +10,7 @@
     {
       "name": "security.jwt.secret-key",
       "type": "java.lang.String",
+      "description": "Secrete key used for issuing JWT",
       "sourceType": "com.example.apilogin.security.JwtProperties"
     }
   ],
